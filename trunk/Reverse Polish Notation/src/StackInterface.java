@@ -1,5 +1,6 @@
-public interface StackInterface {
-	public void push (Object o);
+public interface StackInterface<T> {
+	
+	public void push (T o);
 	public void pop () throws StackUnderflow;
 	public Object top () throws StackUnderflow;
 	public boolean isEmpty ();
