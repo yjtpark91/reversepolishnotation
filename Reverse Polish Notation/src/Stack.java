@@ -1,43 +1,40 @@
 
-public class Stack implements StackInterface {
+public class Stack<T> implements StackInterface<T> {
 
 	private StackList myStack;
 	
-	public Stack () {
-		this.Empty();
+	public Stack( ) {
+		myStack = new StackList( );
 	}
-	
+
+	@Override
 	public void Empty() {
-      myStack = new StackList();
+		return myStack.Empty();
 	}
 
+	@Override
 	public boolean isEmpty() {
-		return myStack.isEmpty();
+		return myStack.isEmpty( );
 	}
 
+	@Override
 	public void pop() throws StackUnderflow {
-		if (myStack.isEmpty()){
-			throw new StackUnderflow();
-		} else {
-			// chop off the first one, so make sure we are at the top
-			myStack.reset();
-			myStack.remove();
-		}
+		myStack.pop();
 	}
 
-	public void push(Object o) {
-		// All pushing is done on the front
-		myStack.addFirst(o);
+	@Override
+	public String print() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	@Override
+	public void push(T o) {
+		myStack.push(o); 	
 	}
 
 	public Object top() throws StackUnderflow {
-		myStack.reset();
-		return myStack.current();
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	public String print (){
-		return myStack.print("Top:", ":Bottom");
-	}
-
 }
