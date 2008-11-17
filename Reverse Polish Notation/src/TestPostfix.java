@@ -1,7 +1,7 @@
 
 public class TestPostfix {
 	public static <T> void main(String[] args) throws StackUnderflow, StackOverflow {
-		//do the test with all of the tasks for the pre-lab
+		//do the test with all of the expressions from the pre-lab
 		String testStringA = "12*3+";
 		String testStringB = "123*+";
 		String testStringC = "12+34^-";
