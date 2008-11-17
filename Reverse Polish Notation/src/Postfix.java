@@ -4,6 +4,8 @@ public class Postfix<T> {
 	//fields
 	private int MAX_OPERATORS = 5;
 	Integer result;
+	//operators stored by precedence
+	char[] operators = {'^', '*', '/', '+', '-'};
 	
 	public int evaluate (String pfx) throws StackUnderflow, StackOverflow {
 		//make a new stack that stores integers
@@ -14,7 +16,7 @@ public class Postfix<T> {
 		{
 			Character c = new Character(pfx.charAt(i));
 			
-			//if c is an operand just oush it into the stack
+			//if c is an operand just push it into the stack
 			if (isOperand(c)) 
 			{ 
 				System.out.println(c + " is an Operand push it to the stack.");
@@ -65,6 +67,76 @@ public class Postfix<T> {
 		return myStack.top(); 
 	}
 	
+	
+	public String infixToPostfix (String ifx)
+	{
+		char cBuffer = 0;
+		Stack<Character> myStack = new Stack<Character>();
+		Stack<Character> buffer = new Stack<Character>();
+		for(int i = ifx.length()-1; i >= 0; i--){
+			Character c = new Character(ifx.charAt(i));
+			if (isOperand (c)){
+				try {
+					myStack.push(c);
+				} catch (StackOverflow e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if (isOperator (c)){
+				while (buffer.isEmpty()){
+					
+					try {
+						buffer.push(c);
+					} catch (StackOverflow e) {
+						e.printStackTrace();
+					}
+					
+				}
+				
+				while (!buffer.isEmpty()){
+					
+					try {
+						cBuffer = buffer.top();
+					} catch (StackUnderflow e) {
+						e.printStackTrace();
+					}
+					
+					if ((getPrecedence(cBuffer) >= getPrecedence(c))) {
+						
+						try {
+							myStack.push(cBuffer);
+						} catch (StackOverflow e) {
+							e.printStackTrace();
+						}
+						
+						try {
+							buffer.pop();
+						} catch (StackUnderflow e) {
+							e.printStackTrace();
+						}
+						
+						try {
+							buffer.push(c);
+						} catch (StackOverflow e) {
+							e.printStackTrace();
+						}
+						
+					}else {
+						
+						try {
+							buffer.push(c);
+						} catch (StackOverflow e) {
+							e.printStackTrace();
+						}
+						
+					}
+				}
+			}
+		}
+		return myStack.print();
+	}
+	
 	/**
 	 * returns if the character is a operator
 	 * @return is an operand
@@ -87,9 +159,6 @@ public class Postfix<T> {
 	 */ 
 	public boolean isOperator(Character ch) 
 	{ 
-		//operators stored by precedence
-		char[] operators = {'^', '*', '/', '+', '-'};
-		
 		//parse through the operators[] array 
 		for(int i = 0; i < MAX_OPERATORS; i++) 
 			//compare ch to the current char at index i 
@@ -99,4 +168,21 @@ public class Postfix<T> {
 		//if they don't match return false
 		return false; 
 	}
+	
+	/** 
+	   * calculates the precedence of an operator 
+	   * @param ch - the operator to check 
+	   * @return precedence of ch 
+	  */ 
+	  public int getPrecedence(Character ch) 
+	 { 
+		  for(int i = 0; i < MAX_OPERATORS; i++)
+			  //if ch matches the current char in operators[i] 
+			  if(ch.charValue() == operators[i]) 
+				  //return its precedence. 
+				  return MAX_OPERATORS-i; 
+
+		  //if no match was found return -1. 
+		  return -1; 
+	 } 
 }
