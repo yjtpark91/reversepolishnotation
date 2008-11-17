@@ -1,6 +1,11 @@
 
 public class TestPostfix {
 	public static <T> void main(String[] args) throws StackUnderflow, StackOverflow {
+		
+		Postfix<T> testPostfix2 = new Postfix<T>();
+		
+		System.out.println(testPostfix2.infixToPostfix("1*2+3"));
+		
 		//do the test with all of the expressions from the pre-lab
 		String testStringA = "12*3+";
 		String testStringB = "123*+";
