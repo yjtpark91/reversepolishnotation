@@ -16,6 +16,9 @@ public class TestPostfix {
 		System.out.println();
 		System.out.println("This is it: " + testPostfix2.infixToPostfix("9 - 1 - 2 - 3 * 2 - 1") + " Expected: 91-2-32*-1-");
 		System.out.println();
+		System.out.println("This is it: " + testPostfix2.infixToPostfix("1 + 2 + 3 / 4 + 5 + 6 * ( 7 + 8 )") + " Expected: 12+34/+5+678+*+");
+		System.out.println();
+		
 		
 		//do the test with all of the expressions from the pre-lab
 		String testStringA = "12*3+";
