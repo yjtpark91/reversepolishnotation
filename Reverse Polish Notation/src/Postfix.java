@@ -67,7 +67,6 @@ public class Postfix<T> {
 		return myStack.top(); 
 	}
 	
-	//1*2+3
 	public String infixToPostfix (String ifx) throws StackOverflow, StackUnderflow
 	{
 		char cBuffer = 0;
@@ -111,6 +110,18 @@ public class Postfix<T> {
 						buffer.push(c);
 					}
 				}
+			}
+			
+			if (c == ')' ) { 
+				System.out.println(c + " is )");
+				while (!buffer.isEmpty()){
+					myStack.push(buffer.top());
+					buffer.pop();
+				}
+			}
+			
+			if (c == '(' ) {  
+				System.out.println(c + " is (");
 			}
 		}
 		
