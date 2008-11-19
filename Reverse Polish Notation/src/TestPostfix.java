@@ -4,7 +4,18 @@ public class TestPostfix {
 		
 		Postfix<T> testPostfix2 = new Postfix<T>();
 		
-		System.out.println(testPostfix2.infixToPostfix("1*2+3"));
+		System.out.println("This is it: " + testPostfix2.infixToPostfix("1*2+3") + " Expected: 12*3+");
+		System.out.println();
+		System.out.println("This is it: " + testPostfix2.infixToPostfix("1+2*3") + " Expected: 123*+");
+		System.out.println();
+		System.out.println("This is it: " + testPostfix2.infixToPostfix("1 + 2 - 3 ^ 4") + " Expected: 12+34^-");
+		System.out.println();
+		System.out.println("This is it: " + testPostfix2.infixToPostfix("1 ^ 2 - 3 * 4") + " Expected: 12^34*-");
+		System.out.println();
+		System.out.println("This is it: " + testPostfix2.infixToPostfix("1 + 2 * 3 - 4 ^ 5 + 6") + " Expected: 123*+45^-6+");
+		System.out.println();
+		System.out.println("This is it: " + testPostfix2.infixToPostfix("9 - 1 - 2 - 3 * 2 - 1") + " Expected: 91-2-32*-1-");
+		System.out.println();
 		
 		//do the test with all of the expressions from the pre-lab
 		String testStringA = "12*3+";

@@ -67,74 +67,66 @@ public class Postfix<T> {
 		return myStack.top(); 
 	}
 	
-	
-	public String infixToPostfix (String ifx)
+	//1*2+3
+	public String infixToPostfix (String ifx) throws StackOverflow, StackUnderflow
 	{
 		char cBuffer = 0;
 		Stack<Character> myStack = new Stack<Character>();
 		Stack<Character> buffer = new Stack<Character>();
-		for(int i = ifx.length()-1; i >= 0; i--){
+		
+		for(int i = 0; i <= ifx.length()-1; i++){
 			Character c = new Character(ifx.charAt(i));
-			if (isOperand (c)){
-				try {
-					myStack.push(c);
-				} catch (StackOverflow e) {
-					e.printStackTrace();
-				}
+			System.out.println("New character: stack = " + myStack.print() + " buffer: "+buffer.print());
+			
+			if (isOperand(c)){
+				System.out.println(c+" is an operand push it in myStack");
+				myStack.push(c);
 			}
 			
-			if (isOperator (c)){
-				while (buffer.isEmpty()){
+			if (isOperator(c)){
+				System.out.println(c + " is an operator");
+			
+				if (buffer.isEmpty()){
+					System.out.println("Buffer is empty push " +c+ " in it");
+					buffer.push(c);
 					
-					try {
-						buffer.push(c);
-					} catch (StackOverflow e) {
-						e.printStackTrace();
-					}
+				} else {
 					
-				}
-				
-				while (!buffer.isEmpty()){
-					
-					try {
-						cBuffer = buffer.top();
-					} catch (StackUnderflow e) {
-						e.printStackTrace();
-					}
-					
-					if ((getPrecedence(cBuffer) >= getPrecedence(c))) {
+					cBuffer = buffer.top();
+					System.out.println("prio: "+ cBuffer + " " +getPrecedence(cBuffer));
+					System.out.println("prio: "+ c + " " +getPrecedence(c));
+					if (getPrecedence(cBuffer) >= getPrecedence(c)){
+						System.out.println("precedence of " +c + " is lower than " + cBuffer + " push everything from buffer in myStack");
 						
-						try {
-							myStack.push(cBuffer);
-						} catch (StackOverflow e) {
-							e.printStackTrace();
-						}
-						
-						try {
+						while (!buffer.isEmpty()){
+							System.out.println("put " +buffer.top() + " in the stack");
+							myStack.push(buffer.top());
 							buffer.pop();
-						} catch (StackUnderflow e) {
-							e.printStackTrace();
 						}
 						
-						try {
-							buffer.push(c);
-						} catch (StackOverflow e) {
-							e.printStackTrace();
-						}
+						buffer.push(c);
 						
-					}else {
-						
-						try {
-							buffer.push(c);
-						} catch (StackOverflow e) {
-							e.printStackTrace();
-						}
-						
+					}else{
+						System.out.println("precedence of " +c + " is higher than " +cBuffer+ " --> just push it in the buffer");
+						buffer.push(c);
 					}
 				}
 			}
 		}
-		return myStack.print();
+		
+		while (!buffer.isEmpty()){
+			System.out.println("put the rest of the buffer in the stack");
+			myStack.push(buffer.top());
+			buffer.pop();
+		}
+		
+		//reverse the stack
+		Stack<Character> reversed = new Stack<Character>();
+		while (!myStack.isEmpty()){
+			reversed.push(myStack.top());
+			myStack.pop();
+		}
+		return reversed.print();
 	}
 	
 	/**
@@ -178,7 +170,7 @@ public class Postfix<T> {
 	 { 
 		  for(int i = 0; i < MAX_OPERATORS; i++)
 			  //if ch matches the current char in operators[i] 
-			  if(ch.charValue() == operators[i]) 
+			  if(ch == operators[i]) 
 				  //return its precedence. 
 				  return MAX_OPERATORS-i; 
 
